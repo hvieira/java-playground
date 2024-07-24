@@ -1,4 +1,4 @@
-package org.hvieira.tutorial.controllers;
+package org.hvieira.tutorial.web.controllers;
 
 import java.util.UUID;
 
