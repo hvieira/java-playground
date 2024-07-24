@@ -20,6 +20,7 @@ public class Employee {
     private String name;
     private int monthlySalary;
 
+    // TODO this is not lazy loaded. Maybe because due to serialization it calls on every getter?
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name="employee_id")
     private List<PayrollRecord> payrollRecords;
