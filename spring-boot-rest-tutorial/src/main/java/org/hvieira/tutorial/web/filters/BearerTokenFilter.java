@@ -42,6 +42,7 @@ public class BearerTokenFilter extends OncePerRequestFilter {
 
             if (authenticationResult) {
                 // see https://medium.com/@sallu-salman/implementing-token-based-authentication-in-a-spring-boot-project-dba7811ffcee
+                // the constructor here is important, as one of the constructors simply has the "isAuthentication" property returning false. This one returns true
                 Authentication authentication = new UsernamePasswordAuthenticationToken("dummyPrincipal", null, Collections.emptyList());
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             } else {
