@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS employee (
 
 CREATE TABLE IF NOT EXISTS payroll_record (
     employee_id uuid REFERENCES employee(id),
-    payment_date date NOT NULL default now(),
+    payment_date timestamp with time zone NOT NULL default now(),
     amount numeric NOT NULL,
     CONSTRAINT payroll_pkey PRIMARY KEY(employee_id, payment_date)
 );

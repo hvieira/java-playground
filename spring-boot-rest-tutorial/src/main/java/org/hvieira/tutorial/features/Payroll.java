@@ -26,11 +26,10 @@ public class Payroll {
         this.payrollRecordRepository = payrollRecordRepository;
     }
 
-    public String payEmployee(UUID employeeId) {
+    public PayrollRecord payEmployee(UUID employeeId) {
         return employeeRepository.findById(employeeId)
         .map(this::performSalaryPayment)
-        // TODO map to something meaningful for a JSON response
-        .map(PayrollRecord::toString)
+        // TODO this exception type should be used by the controller and not the "feature"
         .orElseThrow(() -> new ResponseStatusException(
             HttpStatus.NOT_FOUND, 
             String.format("Employee %s does not exist", employeeId)));
@@ -38,6 +37,7 @@ public class Payroll {
 
     private PayrollRecord performSalaryPayment(Employee employee) {
         // TODO check that the employee has not been paid this month
+
         PayrollRecord record = new PayrollRecord(employee.getId(), OffsetDateTime.now(ZoneOffset.UTC), employee.getMonthlySalary());
         return payrollRecordRepository.save(record);
     }
