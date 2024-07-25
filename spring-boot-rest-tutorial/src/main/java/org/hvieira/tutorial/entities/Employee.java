@@ -3,6 +3,8 @@ package org.hvieira.tutorial.entities;
 import java.util.List;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -20,9 +22,10 @@ public class Employee {
     private String name;
     private int monthlySalary;
 
-    // TODO this is not lazy loaded. Maybe because due to serialization it calls on every getter?
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name="employee_id")
+    // ignore this property so it is not serialized to JSON (which triggers the fetch from the DB)
+    @JsonIgnore
     private List<PayrollRecord> payrollRecords;
 
     // JPA constructor

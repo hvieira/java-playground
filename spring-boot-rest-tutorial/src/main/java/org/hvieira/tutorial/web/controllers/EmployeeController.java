@@ -25,11 +25,7 @@ public class EmployeeController {
     @GetMapping("/employees")
     public List<Employee> getEmployees() {
         List<Employee> employees = new LinkedList<>();
-        
         employeeRepository.findAll().forEach(employees::add);
-
-        // force load the lazy records
-        // employees.forEach(Employee::getPayrollRecords);
 
         return employees;
     }
