@@ -10,6 +10,7 @@ import org.hvieira.tutorial.entities.Employee;
 import org.hvieira.tutorial.entities.PayrollRecord;
 import org.hvieira.tutorial.exceptions.EmployeeDoesNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -19,7 +20,9 @@ public class Payroll {
     private PayrollRecordRepository payrollRecordRepository;
 
     @Autowired
-    public Payroll(EmployeeRepository employeeRepository, PayrollRecordRepository payrollRecordRepository) {
+    public Payroll(
+        EmployeeRepository employeeRepository, 
+        @Qualifier("postgresPayrollRecordRepository") PayrollRecordRepository payrollRecordRepository) {
         this.employeeRepository = employeeRepository;
         this.payrollRecordRepository = payrollRecordRepository;
     }
@@ -34,7 +37,7 @@ public class Payroll {
         // TODO check that the employee has not been paid this month
 
         PayrollRecord record = new PayrollRecord(employee.getId(), OffsetDateTime.now(ZoneOffset.UTC), employee.getMonthlySalary());
-        return payrollRecordRepository.save(record);
+        return payrollRecordRepository.addRecord(record);
     }
 
 }
